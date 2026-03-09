@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PDM2 - W5P1 - 1 star exercise</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./lib/main-styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script src="./lib/libraries/p5.min.js"></script>
+    <script src="./lib/libraries/p5.sound.min.js"></script>
+  </head>
+
+  <body>
+    <h1>1 Star Exercise</h1>
+    <p>Your sketch:</p>
+    <div class="guidance">
+        <h2>Instructions</h2>
+        <div>
+            <p>This exercise will walk through how to pass arguments to callback functions, which can be useful 
+                when writing reusable event handlers for inputs such as buttons. You will use to to write a single 
+                event handler to be used by three different buttons to allow the user to load a different image depending 
+                on which button was clicked.
+            </p>
+            <ol>
+                <li>In sketch.js, create a canvas (any size) and three <a href="https://p5js.org/reference/#/p5/createButton" target="_blank">buttons</a> with labels "bear", "cat", and "monkey". Don't worry too much about 
+                positioning or styling the buttons, but you can revisit PDM 1 Week 7 lecture 1 if you need a reminder.</li>
+                <li>Create a global variable called <code>img</code>, which will eventually be used to store an image. In <code>draw()</code>, use the <a href="https://p5js.org/reference/#/p5/image" target="_blank">image()</a> function 
+                to display <code>img</code>. You won't see anything (except an error message) when you run the code.</li>
+                <li>Next, handle the error message. The error is occurring because <code>img</code> doesn't have a value 
+                yet. Handle this using either approach shown in class (a try-catch or a conditional that only calls <code>image()</code> if <code>img !== undefined</code>).</li>
+                <li>Define a function called <code>getAnimalImage</code> that takes one parameter called <code>name</code>. Inside the function, add the following line:
+                <pre>img = loadImage("assets/" + name + ".jpg");</pre>This line loads a different image into the <code>img</code> variable 
+                based on the value of <code>name</code>. For example, calling <code>getAnimalImage("monkey")</code> will load the monkey image in the assets 
+            folder into your sketch.</li>
+                <li>The final step is to call the <code>getAnimalImage()</code> function when a button is pressed. As a reminder, you can 
+                do this by passing the <code>getAnimalImage()</code> function each button's <code><a href="https://p5js.org/reference/#/p5.Element/mousePressed" target="_blank">mousePressed()</a></code> method. So 
+            far, you've been told not to use brackets when passing a function as an argument to another function. For example, if one of your buttons 
+        is called <code>catButton</code>, you could do this:
+    <pre>catButton.mousePressed(getAnimalImage);</pre>Write code so that each button calls <code>getAnimalImage()</code> as shown above.</li>
+                <li>If you completed the previous step and tried clicking the buttons, you have probably noticed nothing happens and you get 
+                    some cryptic errors messages. The problem is that <code>getAnimalImage()</code> expects a <code>name</code> and you 
+                    haven't provided one. Try modifying the code you wrote in the previous step so that <code>getAnimalImage()</code> is 
+                    called with an argument for name (it should match an image name in the assets folder) e.g.:
+                    <pre>catButton.mousePressed(getAnimalImage("cat"));</pre>
+                </li>
+                <li>Now you'll find that an image loads immediately, probably the image associated with the last button created. This is because passing a function 
+                    <em>call</em> as an argument, rather than just the function <em>name</em>, causes the function to run immediately 
+                    instead of waiting for the event (<code>mousePressed</code> in this case) to occur. To fix this, you can pass 
+                    an <strong>anonymous</strong> function to <code>mousePressed</code>. The anonymous function will then call <code>getAnimalImage()</code> 
+                    with the appropriate argument. Remember there are two ways to write an anonymous function:
+                    <ul>
+                        <li>Traditional syntax:
+                            <pre>function() {
+    getAnimalImage("name goes here");
+}
+                            </pre>
+                        </li>
+                        <li>Arrow function syntax:
+                            <pre>() =&gt; getAnimalImage("name goes here")</pre>
+                        </li>
+                    </ul>
+                    Both options are equivalent in this case so choose whichever makes more sense to you. Here is a completed example:
+                    <pre>catButton.mousePressed(function () {
+    getAnimalImage("cat");
+})                       
+                    </pre>
+                    Finish the remaining buttons.
+                </li>
+            </ol>
+            <p>Expected output:</p>
+            <p>
+                <video width="300" height="300" controls>
+                    <source src="./assets/1star.mov" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </p>
+        </div>
+        <!-- <div>
+            <button class="btn btn-primary hint" type="button" data-bs-toggle="collapse" data-bs-target="#hint" aria-expanded="false" aria-controls="hint">
+                Hint
+            </button>
+            <div class="collapse" id="hint">
+                <div class="card card-body">
+
+                </div>
+            </div>
+        </div> -->
+    </div>
+    <script src="sketch.js"></script>
+  </body>
+</html>
